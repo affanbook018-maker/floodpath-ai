@@ -1,0 +1,64 @@
+:root {
+  --bg: #121417; --panel: #1b1e23; --line: #2c3139; --text: #e8eaed; --muted: #9aa3ad;
+  --accent: #38bdf8; --ok: #22c55e; --warn: #f59e0b; --bad: #ef4444;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body { display: flex; background: var(--bg); color: var(--text);
+  font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+#panel { width: 400px; max-width: 100%; height: 100%; overflow-y: auto; background: var(--panel);
+  border-right: 1px solid var(--line); padding: 16px; flex: none; }
+#map { flex: 1; height: 100%; background: #0b0d10; }
+h1 { margin: 0 0 2px; font-size: 22px; }
+h2 { margin: 0 0 8px; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); }
+.tag { margin: 0 0 12px; color: var(--muted); }
+section { border-top: 1px solid var(--line); padding: 14px 0; }
+label { display: block; margin-bottom: 10px; color: var(--muted); font-size: 12.5px; }
+label.check { display: flex; gap: 8px; align-items: center; color: var(--text); }
+select, input[type=date] { width: 100%; margin-top: 4px; background: #101215; color: var(--text);
+  border: 1px solid var(--line); border-radius: 8px; padding: 8px; font: inherit; }
+input[type=range] { width: 100%; accent-color: var(--accent); }
+input[type=file] { margin-top: 4px; color: var(--muted); font-size: 12px; width: 100%; }
+.row { display: flex; gap: 8px; margin-bottom: 10px; }
+.row input[type=date] { margin-top: 0; }
+button { cursor: pointer; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px;
+  background: var(--accent); color: #04202e; font: inherit; font-weight: 600; white-space: nowrap; }
+button.ghost { background: #101215; color: var(--text); }
+button:hover { filter: brightness(1.15); }
+button.active { outline: 2px solid var(--accent); }
+.status { padding: 8px 10px; border-radius: 8px; background: #101215; border: 1px solid var(--line); }
+.status.warn { border-color: var(--warn); color: #fcd34d; }
+.status.err { border-color: var(--bad); color: #fca5a5; }
+.hint { color: var(--muted); font-size: 12.5px; margin: 8px 0; }
+.card { border: 1px solid var(--line); border-radius: 10px; padding: 10px; margin-bottom: 8px;
+  cursor: pointer; background: #15181c; }
+.card:hover { border-color: #46505c; }
+.card.sel { border-color: var(--accent); background: #10202b; }
+.card .top { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.card .name { font-weight: 600; }
+.card .meta { color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+.badge { display: inline-block; font-size: 11.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+.badge.ok { background: #0f2e1c; color: #4ade80; }
+.badge.warn { background: #382a08; color: #fbbf24; }
+.badge.bad { background: #3a1214; color: #f87171; }
+.cmp { margin-top: 8px; padding: 8px; border-radius: 8px; background: #101215; font-size: 12.5px; color: var(--muted); }
+.cmp b { color: var(--text); }
+.legend div { display: flex; align-items: center; gap: 8px; margin: 3px 0; color: var(--muted); font-size: 12.5px; }
+.sw { width: 22px; height: 6px; border-radius: 3px; display: inline-block; flex: none; }
+.sw.dashed { background: repeating-linear-gradient(90deg, #f87171 0 5px, transparent 5px 9px); }
+details { border-top: 1px solid var(--line); padding-top: 12px; color: var(--muted); font-size: 12.5px; }
+summary { cursor: pointer; color: var(--text); font-weight: 600; }
+details li { margin-bottom: 4px; }
+#loader { position: fixed; top: 14px; left: 50%; transform: translateX(-50%); z-index: 2000;
+  background: #0b1a24; color: var(--accent); border: 1px solid var(--accent); padding: 8px 14px;
+  border-radius: 999px; font-weight: 600; }
+.pin { font-size: 28px; filter: drop-shadow(0 2px 3px #000); }
+.shelter { width: 28px; height: 28px; border-radius: 50%; background: #fff; border: 3px solid #16a34a;
+  display: grid; place-items: center; font-size: 15px; box-shadow: 0 1px 5px #0008; }
+.shelter.wet { border-color: var(--bad); opacity: .6; }
+.shelter.best { border-color: #facc15; transform: scale(1.25); }
+@media (max-width: 800px) {
+  body { flex-direction: column-reverse; }
+  #panel { width: 100%; height: 48%; border-right: 0; border-top: 1px solid var(--line); }
+  #map { height: 52%; flex: none; width: 100%; }
+}

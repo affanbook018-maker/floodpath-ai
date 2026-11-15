@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FloodPath AI — Where Can People Escape?</title>
+  <meta name="description" content="Flood evacuation route planner combining NASA satellite imagery, flood extent, roads and shelters." />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <aside id="panel">
+    <header>
+      <h1>🌊 FloodPath AI</h1>
+      <p class="tag">Where can people escape? Safe-route planning from satellite flood data, roads and shelters.</p>
+    </header>
+
+    <section>
+      <h2>1 · Flood scenario</h2>
+      <label>Event
+        <select id="scenario"></select>
+      </label>
+      <label>Flooded settlement
+        <select id="village"></select>
+      </label>
+      <label>Water spread: <b id="spreadVal">100%</b>
+        <input id="spread" type="range" min="40" max="160" value="100" />
+      </label>
+      <div class="row">
+        <button id="btnAddFlood" class="ghost">＋ Add flood zone</button>
+        <button id="btnClearFlood" class="ghost">Reset zones</button>
+      </div>
+      <label class="file">Import real flood mask (GeoJSON)
+        <input id="geojson" type="file" accept=".geojson,.json,application/geo+json,application/json" />
+      </label>
+    </section>
+
+    <section>
+      <h2>2 · NASA satellite context</h2>
+      <label class="check"><input id="gibsOn" type="checkbox" checked /> Show NASA GIBS layer</label>
+      <label>Layer
+        <select id="gibsLayer">
+          <option value="MODIS_Terra_CorrectedReflectance_TrueColor">MODIS Terra — true colour</option>
+          <option value="MODIS_Terra_CorrectedReflectance_Bands721">MODIS Terra — bands 7-2-1 (water = dark)</option>
+        </select>
+      </label>
+      <div class="row">
+        <input id="gibsDate" type="date" />
+        <button id="btnBefore" class="ghost">Before</button>
+        <button id="btnDuring" class="ghost">During</button>
+      </div>
+      <label>Opacity <input id="gibsOpacity" type="range" min="10" max="100" value="70" /></label>
+    </section>
+
+    <section>
+      <h2>3 · Escape routes</h2>
+      <div id="status" class="status">Loading…</div>
+      <p class="hint">Click the map (or drag the 📍 pin) to move your location. Shelters are ranked by safest route cost.</p>
+      <div id="results"></div>
+    </section>
+
+    <section class="legend">
+      <h2>Legend</h2>
+      <div><i class="sw" style="background:#2563eb"></i> Simulated flood extent</div>
+      <div><i class="sw" style="background:#ef4444"></i> Flooded road</div>
+      <div><i class="sw" style="background:#f59e0b"></i> Unverified road (unpaved / next to flood)</div>
+      <div><i class="sw" style="background:#22c55e"></i> Recommended route</div>
+      <div><i class="sw dashed"></i> Shortest route that ignores flooding</div>
+    </section>
+
+    <details>
+      <summary>How it works &amp; limits</summary>
+      <ol>
+        <li>Roads and candidate shelters (schools, hospitals, community centres…) come live from OpenStreetMap.</li>
+        <li>Each road segment is checked against the flood layer → <b>dry</b>, <b>unverified</b> or <b>flooded</b>.</li>
+        <li>Dijkstra routing: flooded roads cost ×40, unverified ×2.5, so routes avoid water but still return a clearly labelled “least bad” option if none exists.</li>
+        <li>Every route carries an honest confidence label — we never claim a path is safe when the data can't prove it.</li>
+      </ol>
+      <p><b>Demo disclaimer:</b> flood extents in the built-in scenarios are illustrative. Import an official flood mask (NASA Disasters, UNOSAT, Copernicus EMS, Sentinel-1) for real events. Not for real emergency navigation.</p>
+      <p>Data: NASA GIBS / MODIS, OpenStreetMap contributors.</p>
+    </details>
+  </aside>
+
+  <main id="map"></main>
+  <div id="loader" hidden>Loading roads &amp; shelters from OpenStreetMap…</div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="scenarios.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

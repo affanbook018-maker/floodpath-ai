@@ -3,7 +3,7 @@
 **Flood-aware evacuation routing built on NASA Earth observation data.**
 During floods, people often don't know which roads are under water or where the nearest usable shelter is. FloodPath AI combines satellite flood information with road networks and candidate shelters to suggest escape routes — and, just as importantly, **labels every route with an honest confidence level** so unverified paths are never presented as safe.
 
-> 🔗 **Live demo:** _add GitHub Pages link here after publishing_ (`https://<your-username>.github.io/floodpath-ai/`)
+> 🔗 **Live demo:** https://affanbook018-maker.github.io/floodpath-ai/ · Source: https://github.com/affanbook018-maker/floodpath-ai
 
 ## What the demo does
 
